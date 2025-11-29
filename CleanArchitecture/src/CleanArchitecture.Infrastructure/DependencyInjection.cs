@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Abstractions.Secutiry;
 using CleanArchitecture.Infrastructure.OptionsSetup;
 using CleanArchitecture.Infrastructure.Persistence;
+using CleanArchitecture.Infrastructure.Persistence.Interceptors;
 using CleanArchitecture.Infrastructure.Repositories;
 using CleanArchitecture.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,13 +19,19 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        string sqlConnectionString = configuration.GetConnectionString("DefaultConnection")!;
+        services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
+        string sqlConnectionString = configuration.GetConnectionString("DefaultConnection")!;
         services.AddDbContext<AppDbContext>(
             (sp, options) =>
             {
                 options.UseSqlServer(sqlConnectionString);
+                options.AddInterceptors(
+                    sp.GetRequiredService<UpdateAuditableEntitiesInterceptor>()
+                   );
             });
+
+
 
         services.Scan(scan => scan.FromAssembliesOf(typeof(DependencyInjection))
                                   .AddClasses(c => c.Where(type => type.Name.EndsWith("Repository") && type.IsClass && !type.IsAbstract))

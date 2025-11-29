@@ -19,14 +19,14 @@ internal class UserRepository : IUserRepository
         return await _context.Users.AnyAsync(u => u.Username == username, cancellationToken);
     }
 
-    public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
     }
 
-    public Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
+    public async Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
     }
 
     public void Insert(User user)
@@ -36,6 +36,6 @@ internal class UserRepository : IUserRepository
 
     public void Update(User user)
     {
-        throw new NotImplementedException();
+        _context.Update(user);
     }
 }

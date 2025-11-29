@@ -31,13 +31,13 @@ public sealed class PasswordHasher : IPasswordHasher
         byte[] saltByte = Convert.FromBase64String(salt);
 
         byte[] hashToCompare = Rfc2898DeriveBytes.Pbkdf2(
-            hashByte,
+            password,
             saltByte,
             Iterations,
             Algorithm,
             KeySize
         );
 
-        return CryptographicOperations.FixedTimeEquals(hashToCompare, saltByte);
+        return CryptographicOperations.FixedTimeEquals(hashToCompare, hashByte);
     }
 }

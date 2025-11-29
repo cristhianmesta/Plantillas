@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="ExternalServices\" />
-    <Folder Include="Persistence\Configurations\" />
   </ItemGroup>
 
   <ItemGroup>
