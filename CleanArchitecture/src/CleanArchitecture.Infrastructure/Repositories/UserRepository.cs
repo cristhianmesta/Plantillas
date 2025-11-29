@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Repositories;
 
-internal class UserRepository : IUserRepository
+public sealed class UserRepository : IUserRepository
 {
     private readonly AppDbContext _context;
 
