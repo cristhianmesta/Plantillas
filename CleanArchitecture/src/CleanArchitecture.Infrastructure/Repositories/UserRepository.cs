@@ -26,7 +26,7 @@ public sealed class UserRepository : IUserRepository
 
     public async Task<User?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.IsActive, cancellationToken);
     }
 
     public void Insert(User user)

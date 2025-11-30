@@ -16,7 +16,7 @@ public sealed class JwtProvider : IJwtProvider
 
     public JwtProvider(IOptions<JwtOptions> options) => _options = options.Value;
 
-    public (string Token, DateTime Expires) GenerateAccessToken(User user)
+    public (string AccessToken, DateTime ExpiresUtc) GenerateAccessToken(User user)
     {
         var tokenClaims = new List<Claim>
         {
@@ -38,7 +38,7 @@ public sealed class JwtProvider : IJwtProvider
                                         );
 
         var tokenDurationInMinutes = int.Parse(_options.AccessTokenDurationInMinutes ?? "15");
-        var tokenExpires = DateTime.Now.AddMinutes(tokenDurationInMinutes);
+        var tokenExpires = DateTime.UtcNow.AddMinutes(tokenDurationInMinutes);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -54,8 +54,11 @@ public sealed class JwtProvider : IJwtProvider
     }
 
 
-    public string GenerateRefreshToken()
+    public (string RefreshToken, DateTime ExpiresUtc) GenerateRefreshToken()
     {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        var days = int.Parse(_options.RefreshTokenDurationInDays ?? "1");
+        DateTime expires = DateTime.UtcNow.AddDays(days);
+        string token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        return (token, expires);
     }
 }

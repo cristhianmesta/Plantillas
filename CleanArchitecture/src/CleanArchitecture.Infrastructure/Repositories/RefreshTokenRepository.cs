@@ -11,17 +11,17 @@ public sealed class RefreshTokenRepository : IRefreshTokenRepository
 
     public RefreshTokenRepository(AppDbContext context) => _context = context;
 
-    public async Task<RefreshToken?> GetByToken(string token, CancellationToken cancellationToken)
+    public async Task<RefreshToken?> GetByTokenAsync(string token, CancellationToken cancellationToken)
     {
         return await _context.RefreshTokens.FirstOrDefaultAsync(rt => rt.Token == token, cancellationToken);
     }
 
-    public void CreateAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
+    public void Insert(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
         _context.RefreshTokens.Add(refreshToken);
     }
 
-    public void UpdateAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
+    public void Update(RefreshToken refreshToken, CancellationToken cancellationToken)
     {
         _context.RefreshTokens.Update(refreshToken);
     }

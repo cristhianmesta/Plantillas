@@ -4,6 +4,6 @@ namespace CleanArchitecture.Application.Abstractions.Secutiry;
 
 public interface IJwtProvider
 {
-    (string Token, DateTime Expires) GenerateAccessToken(User user);
-    string GenerateRefreshToken();
+    (string AccessToken, DateTime ExpiresUtc) GenerateAccessToken(User user);
+    (string RefreshToken, DateTime ExpiresUtc) GenerateRefreshToken();
 }
