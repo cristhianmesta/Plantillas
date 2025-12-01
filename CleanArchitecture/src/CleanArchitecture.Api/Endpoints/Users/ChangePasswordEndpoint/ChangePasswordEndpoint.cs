@@ -1,7 +1,5 @@
-﻿using CleanArchitecture.Api.Endpoints.Users.ChangePasswordEndpoint;
-using CleanArchitecture.Application.Abstractions.Cqrs;
+﻿using CleanArchitecture.Application.Abstractions.Cqrs;
 using CleanArchitecture.Application.UseCases.Users.Commands.ChangePassword;
-using CleanArchitecture.Application.UseCases.Users.Commands.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Api.Endpoints.Users.ChangePasswordEndpoint;
