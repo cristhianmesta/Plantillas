@@ -1,13 +1,13 @@
 ﻿namespace CleanArchitecture.Domain.Shared;
 
-public class Error(string code, string message, ErrorType type) : IEquatable<Error>
+public class Error(string code, string description, ErrorType type) : IEquatable<Error>
 {
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
     public static readonly Error NullValue = new("Error.NullValue", "The specified result value is null.", ErrorType.Failure);
 
     public string Code { get; } = code;
 
-    public string Message { get; } = message;
+    public string Description { get; } = description;
 
     public ErrorType Type { get; } = type;
 
@@ -52,12 +52,12 @@ public class Error(string code, string message, ErrorType type) : IEquatable<Err
             return false;
         }
 
-        return Code == other.Code && Message == other.Message;
+        return Code == other.Code && Description == other.Description;
     }
 
     public override bool Equals(object? obj) => obj is Error error && Equals(error);
 
-    public override int GetHashCode() => HashCode.Combine(Code, Message);
+    public override int GetHashCode() => HashCode.Combine(Code, Description);
 
     public override string ToString() => Code;
 }

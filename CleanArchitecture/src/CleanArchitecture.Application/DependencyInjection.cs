@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Abstractions.Cqrs;
+using CleanArchitecture.Application.Behaviors;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -23,6 +24,9 @@ public static class DependencyInjection
                     .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)), publicOnly: false)
                         .AsImplementedInterfaces()
                         .WithScopedLifetime());
+
+        services.Decorate(typeof(ICommandHandler<>), typeof(ValidationDecorator.CommandBaseHandler<>));
+        services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
 
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);

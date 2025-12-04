@@ -32,7 +32,7 @@ public sealed class LoginHandler : ICommandHandler<Login, AuthenticationTokenPai
     {
         var user = await _userRepository.GetByUsernameAsync(command.Username, cancellationToken);
 
-        if (user == null)
+        if (user is null)
         {
             return Result.Failure<AuthenticationTokenPair>(Error.Validation("Login", "El nombre de usuario no es válido."));
         }

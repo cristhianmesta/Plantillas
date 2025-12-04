@@ -1,4 +1,5 @@
 using CleanArchitecture.Api.Extensions;
+using CleanArchitecture.Api.Infraestructure;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 
@@ -12,6 +13,10 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfraestructure(builder.Configuration);
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -21,6 +26,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
+
+//app.UseAuthentication();
+
+//app.UseAuthorization();
 
 app.MapGet("/", async () =>
 {

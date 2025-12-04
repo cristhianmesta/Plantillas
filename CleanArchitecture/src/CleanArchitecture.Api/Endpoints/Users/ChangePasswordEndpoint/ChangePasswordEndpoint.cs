@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Abstractions.Cqrs;
+﻿using CleanArchitecture.Api.Extensions;
+using CleanArchitecture.Application.Abstractions.Cqrs;
 using CleanArchitecture.Application.UseCases.Users.Commands.ChangePassword;
 using Microsoft.AspNetCore.Mvc;
 

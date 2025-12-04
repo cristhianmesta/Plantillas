@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Abstractions.Cqrs;
+﻿using CleanArchitecture.Api.Extensions;
+using CleanArchitecture.Application.Abstractions.Cqrs;
 using CleanArchitecture.Application.UseCases.Users.Commands.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ public static class CreateUserEndpoint
 
             if (!result.IsSuccess)
             {
-                return Results.BadRequest(result.Error ?? "No se pudo crear el usuario.");
+                return result.ToProblemDetails();
             }
             return Results.Ok(result.Value);
         })
