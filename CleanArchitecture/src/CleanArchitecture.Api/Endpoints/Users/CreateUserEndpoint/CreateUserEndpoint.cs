@@ -26,7 +26,8 @@ public static class CreateUserEndpoint
         .WithName("CreateUser")
         .WithTags("Users")
         .Produces<Guid>(StatusCodes.Status200OK)
-        .Produces<string>(StatusCodes.Status400BadRequest); 
+        .Produces(StatusCodes.Status401Unauthorized)
+        .ProducesProblem(StatusCodes.Status400BadRequest);
 
         return endpoints;
     }

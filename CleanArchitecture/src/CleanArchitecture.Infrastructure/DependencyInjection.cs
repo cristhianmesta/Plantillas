@@ -67,6 +67,8 @@ public static class DependencyInjection
                     };
                 });
 
+        services.AddAuthorization();
+
         return services;
     }
 }
